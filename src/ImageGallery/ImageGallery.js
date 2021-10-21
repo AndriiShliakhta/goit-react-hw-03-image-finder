@@ -25,6 +25,9 @@ class ImageGallery extends Component {
       // console.log(this.state.page);
       // console.log(prevProps.imageName);
       // console.log(this.props.imageName);
+      if (prevProps.imageName !== this.props.imageName) {
+        this.setState({ images: null, page: 1 });
+      }
 
       this.getData(this.state.page, this.props.imageName);
     }
@@ -39,7 +42,7 @@ class ImageGallery extends Component {
         `https://pixabay.com/api/?q=${imgName}&page=${page}&key=23115860-3b173cd8cbd28dc69cb35b572&image_type=photo&orientation=horizontal&per_page=12`,
       )
       .then(resp => {
-        console.log(this.state.images);
+        // console.log(this.state.images);
         this.setState(prev => ({
           images:
             prev.page === 1
