@@ -4,7 +4,11 @@ class Button extends Component {
   state = {};
 
   render() {
-    return <button type="button">Load More</button>;
+    return (
+      <button type="button" onClick={this.props.loadMore}>
+        Load More
+      </button>
+    );
   }
 }
 
