@@ -1,9 +1,14 @@
 import React from 'react';
 
-function ImageGalleryItem({ webformatURL }) {
+function ImageGalleryItem({ webformatURL, largeImageURL }) {
   return (
     <li className="ImageGalleryItem">
-      <img src={webformatURL} alt="" className="ImageGalleryItem-image" />
+      <img
+        src={webformatURL}
+        data-large={largeImageURL}
+        alt=""
+        className="ImageGalleryItem-image"
+      />
     </li>
   );
 }

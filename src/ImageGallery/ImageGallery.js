@@ -13,7 +13,6 @@ class ImageGallery extends Component {
 
   loadMore = () => {
     this.setState(prev => ({ page: prev.page + 1 }));
-    // console.log(this.state.page);
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -21,10 +20,6 @@ class ImageGallery extends Component {
       prevState.page !== this.state.page ||
       prevProps.imageName !== this.props.imageName
     ) {
-      // console.log(prevState.page);
-      // console.log(this.state.page);
-      // console.log(prevProps.imageName);
-      // console.log(this.props.imageName);
       if (prevProps.imageName !== this.props.imageName) {
         this.setState({ images: null, page: 1 });
       }
@@ -35,20 +30,22 @@ class ImageGallery extends Component {
 
   getData = (page, imgName) => {
     this.setState({ loading: true });
-    // console.log(this.state.page);
 
     axios
       .get(
         `https://pixabay.com/api/?q=${imgName}&page=${page}&key=23115860-3b173cd8cbd28dc69cb35b572&image_type=photo&orientation=horizontal&per_page=12`,
       )
       .then(resp => {
-        // console.log(this.state.images);
         this.setState(prev => ({
           images:
             prev.page === 1
               ? resp.data.hits
               : [...prev.images, ...resp.data.hits],
         }));
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        });
       })
       .catch(error => this.setState({ error }))
       .finally(this.setState({ loading: false }));
@@ -59,7 +56,7 @@ class ImageGallery extends Component {
 
     return (
       <>
-        <ul className="ImageGallery">
+        <ul className="ImageGallery" onClick={this.props.openModal}>
           {error && <h1>{error.message}</h1>}
           {loading && <div>Загружаю...</div>}
           {images &&
@@ -68,11 +65,12 @@ class ImageGallery extends Component {
                 <ImageGalleryItem
                   key={image.id}
                   webformatURL={image.webformatURL}
+                  largeImageURL={image.largeImageURL}
                 />
               );
             })}
         </ul>
-        {images && <Button loadMore={this.loadMore} />}
+        {images && <Button className="Button" loadMore={this.loadMore} />}
       </>
     );
   }
