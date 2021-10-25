@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Button from './Button/Button';
+import { SpinnerDotted } from 'spinners-react';
 
 class ImageGallery extends Component {
   state = {
@@ -58,7 +59,7 @@ class ImageGallery extends Component {
       <>
         <ul className="ImageGallery" onClick={this.props.openModal}>
           {error && <h1>{error.message}</h1>}
-          {loading && <div>Загружаю...</div>}
+          {loading && <SpinnerDotted />}
           {images &&
             images.map(image => {
               return (
