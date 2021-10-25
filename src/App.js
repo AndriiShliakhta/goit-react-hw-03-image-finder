@@ -18,16 +18,8 @@ class App extends Component {
       this.setState({ lagreImgURL: e.target.dataset.large });
     }
   };
-
-  // зробити розмонтирування
-  closeModal = e => {
-    this.setState({ isOpenModal: false });
-
-    // if (e.target) {
-    //   this.setState({ isOpenModal: true });
-    //   this.setState({ lagreImgURL: e.target.dataset.large });
-    // }
-  };
+  toggleModal = () =>
+    this.setState(prev => ({ isOpenModal: !prev.isOpenModal }));
 
   render() {
     return (
@@ -41,7 +33,7 @@ class App extends Component {
           <Modal
             lagreImgURL={this.state.lagreImgURL}
             openModal={this.openModal}
-            onClick={this.closeModal}
+            toggleModal={this.toggleModal}
           />
         )}
       </>
