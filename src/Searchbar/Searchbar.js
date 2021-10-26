@@ -7,7 +7,6 @@ class Searchbar extends Component {
 
   handleChange = ({ currentTarget }) => {
     this.setState({ imageName: currentTarget.value });
-    // console.log(this.state.imageName);
   };
 
   handleSubmit = evt => {
@@ -17,7 +16,6 @@ class Searchbar extends Component {
       return;
     }
     this.props.onSubmit(this.state.imageName);
-
     this.setState({ imageName: '' });
   };
 
@@ -32,8 +30,6 @@ class Searchbar extends Component {
           <input
             className="SearchForm-input"
             type="text"
-            // autocomplete="off"
-            // autofocus
             placeholder="Search images and photos"
             value={this.state.imageName}
             onChange={this.handleChange}
