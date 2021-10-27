@@ -17,20 +17,40 @@ class ImageGallery extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.page !== this.state.page ||
-      prevProps.imageName !== this.props.imageName
-    ) {
-      if (prevProps.imageName !== this.props.imageName) {
-        this.setState({ images: null, page: 1 });
-      }
+    // if (
+    //   prevState.page !== this.state.page ||
+    //   prevProps.imageName !== this.props.imageName
+    // ) {
+    //   if (prevProps.imageName !== this.props.imageName) {
+    //     this.setState({ images: null, page: 1 });
+    //   }
 
-      this.getData(this.state.page, this.props.imageName);
+    //   this.getData(this.state.page, this.props.imageName);
+    // }
+
+    // if (
+    //   prevState.page !== this.state.page ||
+    //   prevProps.imageName !== this.props.imageName
+    // ) {
+    //   if (prevProps.imageName !== this.props.imageName) {
+    //     this.setState({ images: null, page: 1 });
+    //   }
+
+    //   this.getData(this.props.imageName, this.state.page);
+    // }
+
+    if (prevState.page !== this.state.page) {
+      this.getData(this.props.imageName, this.state.page);
+    }
+    if (prevProps.imageName !== this.props.imageName) {
+      this.setState({ images: null, page: 1 });
+      this.getData(this.props.imageName, this.state.page);
     }
   }
 
-  getData = (page, imgName) => {
+  getData = (imgName, page) => {
     this.setState({ loading: true });
+    console.log(page);
 
     axios
       .get(
