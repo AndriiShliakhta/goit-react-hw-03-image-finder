@@ -17,44 +17,24 @@ class ImageGallery extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    // if (
-    //   prevState.page !== this.state.page ||
-    //   prevProps.imageName !== this.props.imageName
-    // ) {
-    //   if (prevProps.imageName !== this.props.imageName) {
-    //     this.setState({ images: null, page: 1 });
-    //   }
+    if (
+      prevState.page !== this.state.page ||
+      prevProps.imageName !== this.props.imageName
+    ) {
+      this.getData();
 
-    //   this.getData(this.state.page, this.props.imageName);
-    // }
-
-    // if (
-    //   prevState.page !== this.state.page ||
-    //   prevProps.imageName !== this.props.imageName
-    // ) {
-    //   if (prevProps.imageName !== this.props.imageName) {
-    //     this.setState({ images: null, page: 1 });
-    //   }
-
-    //   this.getData(this.props.imageName, this.state.page);
-    // }
-
-    if (prevState.page !== this.state.page) {
-      this.getData(this.props.imageName, this.state.page);
-    }
-    if (prevProps.imageName !== this.props.imageName) {
-      this.setState({ images: null, page: 1 });
-      this.getData(this.props.imageName, this.state.page);
+      if (prevProps.imageName !== this.props.imageName) {
+        this.setState({ images: null, page: 1 });
+      }
     }
   }
 
-  getData = (imgName, page) => {
+  getData = () => {
     this.setState({ loading: true });
-    console.log(page);
 
     axios
       .get(
-        `https://pixabay.com/api/?q=${imgName}&page=${page}&key=23115860-3b173cd8cbd28dc69cb35b572&image_type=photo&orientation=horizontal&per_page=12`,
+        `https://pixabay.com/api/?q=${this.props.imageName}&page=${this.state.page}&key=23115860-3b173cd8cbd28dc69cb35b572&image_type=photo&orientation=horizontal&per_page=12`,
       )
       .then(resp => {
         this.setState(prev => ({
