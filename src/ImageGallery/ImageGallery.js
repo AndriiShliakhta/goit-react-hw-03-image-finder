@@ -17,32 +17,31 @@ class ImageGallery extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.page !== this.state.page ||
-      prevProps.imageName !== this.props.imageName
-    ) {
-      this.getData();
-
-      if (prevProps.imageName !== this.props.imageName) {
-        this.setState({ images: null, page: 1 });
-      }
+    if (prevProps.imageName !== this.props.imageName) {
+      this.getData(1);
+      return;
     }
+
+    prevState.page !== this.state.page &&
+      this.state.page !== 1 &&
+      this.getData(this.state.page);
   }
 
-  getData = () => {
+  getData = page => {
     this.setState({ loading: true });
 
     axios
       .get(
-        `https://pixabay.com/api/?q=${this.props.imageName}&page=${this.state.page}&key=23115860-3b173cd8cbd28dc69cb35b572&image_type=photo&orientation=horizontal&per_page=12`,
+        `https://pixabay.com/api/?q=${this.props.imageName}&page=${page}&key=23115860-3b173cd8cbd28dc69cb35b572&image_type=photo&orientation=horizontal&per_page=12`,
       )
       .then(resp => {
-        this.setState(prev => ({
-          images:
-            prev.page === 1
-              ? resp.data.hits
-              : [...prev.images, ...resp.data.hits],
-        }));
+        if (page === 1) {
+          this.setState({ page: 1, images: resp.data.hits });
+        } else
+          this.setState(prev => ({
+            images: [...prev.images, ...resp.data.hits],
+          }));
+
         window.scrollTo({
           top: document.documentElement.scrollHeight,
           behavior: 'smooth',
